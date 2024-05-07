@@ -202,3 +202,8 @@ main {
 .date-picker button {
   width:8em;
 }
+
+.test {
+  margin: 20px auto;
+  width: 160px;
+}
