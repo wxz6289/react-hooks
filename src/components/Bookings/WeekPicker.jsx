@@ -1,11 +1,15 @@
 import { useReducer } from "react";
 import reducer from "./week-reducer";
-import { getWeek } from "@util/util";
+import { getWeek } from "@util/date-wrangler";
 import { FaChevronLeft, FaCalendarDay, FaChevronRight } from "react-icons/fa";
+import PropTypes from 'prop-types';
+
+const set = new Set();
 
 export default function WeekPicker({ date }) {
   const [week, dispatch] = useReducer(reducer, date, getWeek);
-
+  set.add(dispatch);
+  console.log('WeekPicker dispatches:', set.size);
   return (
     <div>
       <p className="date-picker">
@@ -39,3 +43,7 @@ export default function WeekPicker({ date }) {
     </div>
   );
 }
+
+WeekPicker.propTypes = {
+  date: PropTypes.instanceOf(Date).isRequired,
+};

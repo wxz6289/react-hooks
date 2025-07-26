@@ -1,4 +1,4 @@
-import { getWeek } from '@util/util';
+import { getWeek } from '@util/date-wrangler';
 
 export const ACTION_TYPE = {
   NEXT_WEEK: 'NEXT_WEEK',
@@ -18,6 +18,7 @@ export default function reducer(state, action) {
     case ACTION_TYPE.SET_DATE:
       return getWeek(new Date(action.payload));
     default:
+      console.error(`Unknown action type: ${action.type}`);
       return state;
   }
 }

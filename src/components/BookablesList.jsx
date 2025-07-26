@@ -11,10 +11,11 @@ const initState = {
   bookables
 }
 
-let count = 0;
-
 export default function BookableList() {
-  const [{ group, bookableIndex, hasDetails, bookables }, dispatch] = useReducer(reducer, initState);
+  const [{ group, bookableIndex, hasDetails, bookables }, dispatch] = useReducer(reducer, initState, (initial) => {
+    console.log('initial state', initial);
+    return initial;
+  });
   const bookablesInGroup = bookables.filter((b) => b.group == group);
   const bookable = bookablesInGroup[bookableIndex];
   const groups = getUniqueValues(bookables, 'group');
@@ -31,12 +32,7 @@ export default function BookableList() {
     dispatch({ type: ACTION_TYPE.SET_GROUP, payload: value })
   }
 
-  const changeCounter = () => {
-    count++;
-    console.log(count, '>>>');
-  }
-  const changeHasDetails = () => {
-
+  const toggleDetails = () => {
     dispatch({ type: ACTION_TYPE.TOGGLE_HAS_DETAILS })
   }
 
@@ -68,18 +64,17 @@ export default function BookableList() {
         <div className='bookable-details'>
           <div className='item'>
             <div className='item-header'>
-              <h2>{bookable.title}</h2>
+              <h2 className='font-bold p-4'>{bookable.title}</h2>
               <span className='controls'>
                 <label>
                   <input type='checkbox'
                     checked={hasDetails}
-                    onChange={changeHasDetails} />
+                    onChange={toggleDetails} />
                 </label>
                 Show Details
               </span>
             </div>
-            <p>{bookableIndex.notes} </p>
-            <p onClick={changeCounter}>Click {count}</p>
+            <p>{bookableIndex.notes}</p>
             {hasDetails && (
               <div className='items-details'>
                 <h3>Availability</h3>
