@@ -1,7 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react';
 import { resolve, dirname,  } from 'path';
-import { fileURLToPath  } from 'url';
+import { fileURLToPath } from 'url';
+import tailwindcss from '@tailwindcss/vite';
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 // https://vitejs.dev/config/
@@ -21,5 +22,5 @@ export default defineConfig({
     include: /\.(jsx?)$/,
     jsxInject: "import React from 'react'"
   },
-  plugins: [react()],
+  plugins: [react(), tailwindcss()],
 })
