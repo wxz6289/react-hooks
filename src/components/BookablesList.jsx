@@ -11,6 +11,8 @@ const initState = {
   bookables
 }
 
+let count = 0;
+
 export default function BookableList() {
   const [{ group, bookableIndex, hasDetails, bookables }, dispatch] = useReducer(reducer, initState);
   const bookablesInGroup = bookables.filter((b) => b.group == group);
@@ -29,7 +31,12 @@ export default function BookableList() {
     dispatch({ type: ACTION_TYPE.SET_GROUP, payload: value })
   }
 
+  const changeCounter = () => {
+    count++;
+    console.log(count, '>>>');
+  }
   const changeHasDetails = () => {
+
     dispatch({ type: ACTION_TYPE.TOGGLE_HAS_DETAILS })
   }
 
@@ -71,7 +78,8 @@ export default function BookableList() {
                 Show Details
               </span>
             </div>
-            <p>{bookableIndex.notes}</p>
+            <p>{bookableIndex.notes} </p>
+            <p onClick={changeCounter}>Click {count}</p>
             {hasDetails && (
               <div className='items-details'>
                 <h3>Availability</h3>
