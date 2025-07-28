@@ -1,4 +1,4 @@
-import WeekPicker from '@/Bookings/WeekPicker'
+import WeekPicker from '@components/Bookings/WeekPicker'
 export default function BookingsPage() {
   return (
     <main className="bookings-page">

@@ -1,8 +1,10 @@
-import { users } from '@data/static.json';
 import { useState } from 'react'
+import useUser from '@hooks/useUser';
 
 export default function UserList() {
+  const users = useUser();
   const [userIndex, setUserIndex] = useState(1);
+
   const user = users[userIndex];
   return (
     <>

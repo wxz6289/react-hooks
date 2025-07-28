@@ -10,7 +10,9 @@ export default defineConfig({
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
-      '@': resolve(__dirname, 'src/components'),
+      '@': resolve(__dirname, 'src/'),
+      '@components': resolve(__dirname, 'src/components'),
+      '@hooks': resolve(__dirname, 'src/hooks'),
       '@util': resolve(__dirname, 'src/util'),
       '@data': resolve(__dirname, 'src/data'),
       '@pages': resolve(__dirname, 'src/pages')

@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import { Link } from "react-router-dom";
 import { FaCalendarAlt, FaDoorOpen, FaUsers } from "react-icons/fa";
-import UserPicker from "./pages/Users/UserPicker";
+import UserPicker from "@pages/Users/UserPicker";
 import './App.css'
 
 function App() {

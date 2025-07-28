@@ -1,21 +1,36 @@
-import { bookables, days, sessions } from '@data/static.json';
-import { useReducer } from 'react';
+import { days, sessions } from '@data/static.json';
+import { useReducer, useEffect } from 'react';
 import { FaArrowRight } from 'react-icons/fa'
 import { getUniqueValues } from '../util/util'
+import fetchBookables from '@/api/fetchBookables';
+import Spinner from '@/UI/Spinner';// Adjust the import path as necessary
 import reducer, { ACTION_TYPE } from './reducer'
 
 const initState = {
   group: 'Rooms',
   bookableIndex: 0,
   hasDetails: false,
-  bookables
+  bookables: [],
+  isLoading: false,
+  error: false,
 }
 
 export default function BookableList() {
-  const [{ group, bookableIndex, hasDetails, bookables }, dispatch] = useReducer(reducer, initState, (initial) => {
+  const [{ group, bookableIndex, hasDetails, bookables, isLoading, error }, dispatch] = useReducer(reducer, initState, (initial) => {
     console.log('initial state', initial);
     return initial;
   });
+  useEffect(() => {
+    dispatch({ type: ACTION_TYPE.FETCH_BOOKABLES_REQUEST });
+    fetchBookables('http://localhost:3000/bookables')
+      .then(data => {
+        dispatch({ type: ACTION_TYPE.FETCH_BOOKABLES_SUCCESS, payload: data });
+      })
+      .catch(error => {
+        dispatch({ type: ACTION_TYPE.FETCH_BOOKABLES_ERROR, payload: error.message });
+      });
+  }, []);
+
   const bookablesInGroup = bookables.filter((b) => b.group == group);
   const bookable = bookablesInGroup[bookableIndex];
   const groups = getUniqueValues(bookables, 'group');
@@ -34,6 +49,13 @@ export default function BookableList() {
 
   const toggleDetails = () => {
     dispatch({ type: ACTION_TYPE.TOGGLE_HAS_DETAILS })
+  }
+
+  if (isLoading) {
+    return <Spinner>Loading...</Spinner>;
+  }
+  if (error) {
+    return <p>Error: {error}</p>;
   }
 
   return (
