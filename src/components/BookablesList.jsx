@@ -6,20 +6,10 @@ import fetchBookables from '@/api/fetchBookables';
 import Spinner from '@/UI/Spinner';// Adjust the import path as necessary
 import reducer, { ACTION_TYPE } from './reducer'
 
-const initState = {
-  group: 'Rooms',
-  bookableIndex: 0,
-  hasDetails: false,
-  bookables: [],
-  isLoading: false,
-  error: false,
-}
 
-export default function BookableList() {
-  const [{ group, bookableIndex, hasDetails, bookables, isLoading, error }, dispatch] = useReducer(reducer, initState, (initial) => {
-    console.log('initial state', initial);
-    return initial;
-  });
+export default function BookableList({ state, dispatch }) {
+  console.log('BookableList');
+  const { group, bookableIndex, bookables, isLoading, error } = state;
   useEffect(() => {
     dispatch({ type: ACTION_TYPE.FETCH_BOOKABLES_REQUEST });
     fetchBookables('http://localhost:3000/bookables')
@@ -32,7 +22,6 @@ export default function BookableList() {
   }, []);
 
   const bookablesInGroup = bookables.filter((b) => b.group == group);
-  const bookable = bookablesInGroup[bookableIndex];
   const groups = getUniqueValues(bookables, 'group');
 
   const changeBookable = (selectedIndex) => {
@@ -47,9 +36,6 @@ export default function BookableList() {
     dispatch({ type: ACTION_TYPE.SET_GROUP, payload: value })
   }
 
-  const toggleDetails = () => {
-    dispatch({ type: ACTION_TYPE.TOGGLE_HAS_DETAILS })
-  }
 
   if (isLoading) {
     return <Spinner>Loading...</Spinner>;
@@ -82,37 +68,6 @@ export default function BookableList() {
           </button>
         </p>
       </div>
-      {bookable && (
-        <div className='bookable-details'>
-          <div className='item'>
-            <div className='item-header'>
-              <h2 className='font-bold p-4'>{bookable.title}</h2>
-              <span className='controls'>
-                <label>
-                  <input type='checkbox'
-                    checked={hasDetails}
-                    onChange={toggleDetails} />
-                </label>
-                Show Details
-              </span>
-            </div>
-            <p>{bookableIndex.notes}</p>
-            {hasDetails && (
-              <div className='items-details'>
-                <h3>Availability</h3>
-                <div className='bookable-availability'>
-                  <ul>{
-                    bookable.days.sort().map(d => <li key={d}>{days[d]}</li>)
-                  }</ul>
-                  <ul>
-                    {bookable.sessions.map(s => <li key={s}>{sessions[s]}</li>)}
-                  </ul>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
     </>
   )
 }
