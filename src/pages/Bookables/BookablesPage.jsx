@@ -1,4 +1,4 @@
-import BookablesView from '@components/BookablesView';
+import BookablesView from './BookablesView';
 
 export default function BookablesPage() {
   return (
