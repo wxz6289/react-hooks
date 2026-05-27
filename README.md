@@ -1,8 +1,19 @@
-# React + Vite
+# react-hooks
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+《React Hooks in Action》配套练习项目，基于 Vite + React Router。
 
-Currently, two official plugins are available:
+## 启动
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```bash
+pnpm install
+pnpm dev
+```
+
+## 当前进度
+
+- 分支 `charpter8`：UserContext 重构为 `UserProvider` + `useUserContext`
+
+## 相关
+
+- 书籍示例完整版：上级目录 `react-hooks-in-action/`
+- 面试冲刺计划：上级目录 [LEARNING_PLAN.md](../LEARNING_PLAN.md)

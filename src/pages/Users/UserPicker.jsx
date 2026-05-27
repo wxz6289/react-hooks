@@ -1,6 +1,7 @@
 import Spinner from "@/UI/Spinner";
-
-export default function UserPicker({ user, users, setUser, loading }) {
+import {useUserContext} from './UserContext';
+export default function UserPicker() {
+  const { user, users, setUser, loading } = useUserContext();
   if (loading || !users || users.length === 0) {
     return <Spinner />;
   }

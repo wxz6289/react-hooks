@@ -1,11 +1,9 @@
-import { useState, useContext } from 'react';
 import UsersList from './UsersList';
 import UserDetails from './UserDetails';
-import UserContext from './UserContext';
+import { useUserContext } from './UserContext';
+
 export default function UsersPage() {
-  const context = useContext(UserContext);
-  console.dir(context, 'context');
-  const { user, users, setUser, loading, error } = context;
+  const { user, users, setUser, loading, error } = useUserContext();
 
   if (loading) {
     return <div>Loading users...</div>;

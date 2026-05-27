@@ -2,20 +2,12 @@ import { Outlet } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FaCalendarAlt, FaDoorOpen, FaUsers } from "react-icons/fa";
 import UserPicker from "@pages/Users/UserPicker";
-import { useState, useMemo, useEffect } from "react";
-import UserContext from "@pages/Users/UserContext";
-import useUser from "@hooks/useUser";
+import { UserProvider } from '@pages/Users/UserContext';
 import "./App.css";
 
 function App() {
-  const { users, user, setUser, loading, error } = useUser();
-  const contextValue = useMemo(
-    () => ({ user, users, setUser, loading, error }),
-    [user, users, setUser, loading, error]
-  );
-
   return (
-    <UserContext.Provider value={contextValue}>
+    <UserProvider>
       <div className="App">
         <header>
           <nav>
@@ -40,16 +32,11 @@ function App() {
               </li>
             </ul>
           </nav>
-          <UserPicker
-            user={user}
-            users={users}
-            setUser={setUser}
-            loading={loading}
-          />
+          <UserPicker />
         </header>
         <Outlet />
       </div>
-    </UserContext.Provider>
+    </UserProvider>
   );
 }
 
